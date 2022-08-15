@@ -1,0 +1,214 @@
+ CREATE DATABASE address_book_database;
+Query OK, 1 row affected (0.05 sec)
+==================================UC1 -> Create a database for address book service===============================
+
+mysql> use address_book_database;
+Database changed
+mysql> CREATE TABLE address_book_table(firstName VARCHAR(20) NOT NULL,
+    -> lastName VARCHAR(20) NOT NULL,
+    -> address VARCHAR(50) NOT NULL,
+    -> city VARCHAR(20) NOT NULL,
+    -> state VARCHAR(20) NOT NULL,
+    -> zip INT NOT NULL,
+    -> phoneNumber INT NOT NULL,
+    -> emailId VARCHAR(50) NOT NULL);
+Query OK, 0 rows affected (0.17 sec)
+
+================================UC2 -> Create a table with various fields in address book service database===================
+
+mysql> desc address_book_table;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| firstName   | varchar(20) | NO   |     | NULL    |       |
+| lastName    | varchar(20) | NO   |     | NULL    |       |
+| address     | varchar(50) | NO   |     | NULL    |       |
+| city        | varchar(20) | NO   |     | NULL    |       |
+| state       | varchar(20) | NO   |     | NULL    |       |
+| zip         | int         | NO   |     | NULL    |       |
+| phoneNumber | int         | NO   |     | NULL    |       |
+| emailId     | varchar(50) | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+========================================================================UC3 -> Added contacts to table of address book service database====================================
+
+mysql> INSERT INTO address_book_table(firstName,lastName,address,city,state,zip,phoneNumber,emailID)VALUES
+    -> ('Suraj','Rajegore','Shelgaon','Nanded','Maharastra',431704,7261929,'rajegoresuraj2880@gamil.com'),
+    ->  ('kapil','Rajegore','Shelgaon','Nanded','Maharastra',431123,9384838,'kapilrajeoger@gmail.com'),
+    -> ('Aditya','Motewar','Billali','Degloor','andra',232525,332234,'m@gmail2001');
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM address_book_table;
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| firstName | lastName | address  | city    | state      | zip    | phoneNumber | emailId                     |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |
+| kapil     | Rajegore | Shelgaon | Nanded  | Maharastra | 431123 |     9384838 | kapilrajeoger@gmail.com     |
+| Aditya    | Motewar  | Billali  | Degloor | andra      | 232525 |      332234 | m@gmail2001                 |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+3 rows in set (0.00 sec)
+
+=============================================================UC5 -> Delete contact in a table of address book service database===================
+
+mysql> DELETE FROM address_book_table WHERE firstName = 'kapil';
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM address_book_table;
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| firstName | lastName | address  | city    | state      | zip    | phoneNumber | emailId                     |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |
+| Aditya    | Motewar  | Billali  | Degloor | andra      | 232525 |      332234 | m@gmail2001                 |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM address_book_table WHERE firstName = 'suraj';
++-----------+----------+----------+--------+------------+--------+-------------+-----------------------------+
+| firstName | lastName | address  | city   | state      | zip    | phoneNumber | emailId                     |
++-----------+----------+----------+--------+------------+--------+-------------+-----------------------------+
+| Suraj     | Rajegore | Shelgaon | Nanded | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |
++-----------+----------+----------+--------+------------+--------+-------------+-----------------------------+
+1 row in set (0.00 sec)
+======================================UC6 -> Retrieve contact using city or state from a table of address book service database====================================
+
+mysql> select * from address_book_table where state = 'maharastra' or city = 'nanded';
++-----------+----------+----------+--------+------------+--------+-------------+-----------------------------+
+| firstName | lastName | address  | city   | state      | zip    | phoneNumber | emailId                     |
++-----------+----------+----------+--------+------------+--------+-------------+-----------------------------+
+| Suraj     | Rajegore | Shelgaon | Nanded | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |
++-----------+----------+----------+--------+------------+--------+-------------+-----------------------------+
+1 row in set (0.00 sec)
+
+===========================================UC-7-retrive data cout city===================================================================
+
+mysql> select COUNT(city) FROM address_book_table;
++-------------+
+| COUNT(city) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.05 sec)
+======================================UC-10-------------------------------------------==============================
+mysql> select COUNT(state) from address_book_table;
++--------------+
+| COUNT(state) |
++--------------+
+|            2 |
++--------------+
+1 row in set (0.00 sec)
+
+
+mysql> select city,state,COUNT(*) from address_book_table;
++--------+------------+----------+
+| city   | state      | COUNT(*) |
++--------+------------+----------+
+| Nanded | Maharastra |        2 |
++--------+------------+----------+
+1 row in set (0.04 sec)
+
+mysql> select COUNT(city) and COUNT(state) from address_book_table;
++------------------------------+
+| COUNT(city) and COUNT(state) |
++------------------------------+
+|                            1 |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from address_book_table;
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| firstName | lastName | address  | city    | state      | zip    | phoneNumber | emailId                     |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |
+| Aditya    | Motewar  | Billali  | Degloor | andra      | 232525 |      332234 | m@gmail2001                 |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+2 rows in set (0.00 sec)
+
+
+=====================================UC-8-order by firstname=====================================================
+
+mysql> select * from address_book_table ORDER BY firstName;
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| firstName | lastName | address  | city    | state      | zip    | phoneNumber | emailId                     |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| Aditya    | Motewar  | Billali  | Degloor | andra      | 232525 |      332234 | m@gmail2001                 |
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+2 rows in set (0.03 sec)
+
+mysql> select * from address_book_table;
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| firstName | lastName | address  | city    | state      | zip    | phoneNumber | emailId                     |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |
+| Aditya    | Motewar  | Billali  | Degloor | andra      | 232525 |      332234 | m@gmail2001                 |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select firstName,city FROM address_book_table ORDER BY city;
++-----------+---------+
+| firstName | city    |
++-----------+---------+
+| Aditya    | Degloor |
+| Suraj     | Nanded  |
++-----------+---------+
+2 rows in set (0.00 sec)
+
+==================================================UC-9-add book name======================================
+mysql> ALTER TABLE address_book_table ADD bookName VARCHAR(20) NOT NULL ,ADD conatctType VARCHAR(30) NOT NULL;
+Query OK, 0 rows affected (0.51 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC address_book_table;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| firstName   | varchar(20) | NO   |     | NULL    |       |
+| lastName    | varchar(20) | NO   |     | NULL    |       |
+| address     | varchar(50) | NO   |     | NULL    |       |
+| city        | varchar(20) | NO   |     | NULL    |       |
+| state       | varchar(20) | NO   |     | NULL    |       |
+| zip         | int         | NO   |     | NULL    |       |
+| phoneNumber | int         | NO   |     | NULL    |       |
+| emailId     | varchar(50) | NO   |     | NULL    |       |
+| bookName    | varchar(20) | NO   |     | NULL    |       |
+| conatctType | varchar(30) | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM address_book_table;
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+----------+-------------+
+| firstName | lastName | address  | city    | state      | zip    | phoneNumber | emailId                     | bookName | conatctType |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+----------+-------------+
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharastra | 431704 |     7261929 | rajegoresuraj2880@gamil.com |          |             |
+| Aditya    | Motewar  | Billali  | Degloor | andra      | 232525 |      332234 | m@gmail2001                 |          |             |
++-----------+----------+----------+---------+------------+--------+-------------+-----------------------------+----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE address_book_table CHANGE conatctType contactType VARCHAR(30);
+Query OK, 0 rows affected (0.69 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+================================================UC4 -> Edit contact in a table of address book service databas=============================================
+mysql> UPDATE address_book_table SET bookName = 'Bridgelabz',contactType = 'Professional' WHERE firstName = 'Suraj';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE address_book_table SET bookName = 'Hike',contactType = 'Family' WHERE firstName = 'Kapil';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+==========================================================UC-10-=========================================================
+
+mysql> INSERT INTO address_book_table(firstName,lastName,address,city,state,zip,phoneNumber,emailId,bookName,contactType)VALUES
+    -> ('Suraj','Rajegore','Shelgaon','Nanded','Maharashtra',34878,65478,'suraj@gmail.com','Bridgelabz','Friend');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * From address_book_table;
++-----------+----------+----------+---------+-------------+--------+-------------+-----------------------------+------------+--------------+
+| firstName | lastName | address  | city    | state       | zip    | phoneNumber | emailId                     | bookName   | contactType  |
++-----------+----------+----------+---------+-------------+--------+-------------+-----------------------------+------------+--------------+
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharastra  | 431704 |     7261929 | rajegoresuraj2880@gamil.com | Bridgelabz | Professional |
+| Aditya    | Motewar  | Billali  | Degloor | andra       | 232525 |      332234 | m@gmail2001                 |            |              |
+| Suraj     | Rajegore | Shelgaon | Nanded  | Maharashtra |  34878 |       65478 | suraj@gmail.com             | Bridgelabz | Friend       |
++-----------+----------+----------+---------+-------------+--------+-------------+-----------------------------+------------+--------------+
+3 rows in set (0.00 sec)
